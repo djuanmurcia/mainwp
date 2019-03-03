@@ -59,6 +59,7 @@ class MainWP_Manage_Sites_List_Table extends WP_List_Table {
 			case 'plugin_update':
 			case 'theme_update':
 			case 'site':
+			case 'imgurl':	 
 			case 'url':
 			case 'groups':
 			case 'backup':
@@ -79,6 +80,7 @@ class MainWP_Manage_Sites_List_Table extends WP_List_Table {
 		$sortable_columns = array(
 			'site'      => array( 'site', false ),
 			'url'       => array( 'url', false ),
+			'imgurl'       => array( 'imgurl', false ),								  
 			'groups'    => array( 'groups', false ),
 			'last_sync' => array( 'last_sync', false ),
 			'last_post' => array( 'last_post', false ),
@@ -94,6 +96,7 @@ class MainWP_Manage_Sites_List_Table extends WP_List_Table {
 	function get_columns() {
 		$columns = array(
 			'cb'           => '<input type="checkbox" />',
+			'imgurl'          => __( 'IMG URL', 'mainwp' ),									  
 			'status'       => __( 'Status', 'mainwp' ),
 			'wpcore_update'       => '<i class="fa fa-wordpress" aria-hidden="true"></i>',
 			'plugin_update'       => '<i class="fa fa-plug" aria-hidden="true"></i>',
@@ -518,7 +521,16 @@ class MainWP_Manage_Sites_List_Table extends WP_List_Table {
 
 		return sprintf( '<strong><a target="_blank" href="%1$s" class="site_url mainwp-may-hide-referrer">%1$s</a></strong>%2$s', $item['url'], $this->row_actions( $actions ) );
 	}
+	/*IMAGE OF THE WEB PAGE*/
+	
+	function column_imgurl( $item ) {
+	
 
+		$actions = apply_filters( 'mainwp_managesites_column_imgurl', $actions, $item['id'] );
+
+		return sprintf( '<img style="width="50px"; height="90px"; -webkit-user-select: none;" src="https://s0.wp.com/mshots/v1/%1$s">%2$s', $item['url'], $this->row_actions( $actions ) );
+	}
+	
 	function column_backup( $item ) {
 		$siteObj = new stdClass();
 		$siteObj->id = $item['id'];
